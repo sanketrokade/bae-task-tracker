@@ -129,11 +129,12 @@
         return;
       }
 
-      const payload = {
-  name: form.name.value.trim(),
-  task: form.task.value.replace(/[\r\n]+/g, " ").trim(),
-  status: form.status.value.trim()
-};
+        const payload = {
+        name: form.name.value.trim().replace(/[\r\n,]+/g, " "),
+        task: form.task.value.trim().replace(/[\r\n,]+/g, " "),
+        status: form.status.value.trim().replace(/[\r\n,]+/g, " ")
+      };
+
 
 
       fetch(scriptURL, {
