@@ -99,6 +99,21 @@
     <div class="footer">Made with ❤️ for BAE</div>
   </div>
 
+  <div style="margin-top: 40px; width: 90%; max-width: 1000px;">
+    <h2 style="text-align: center;">📋 Task Dashboard</h2>
+    <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse; background: #fffef0;">
+      <thead style="background: #ffc107; color: #2b2b2b;">
+        <tr>
+          <th>Name</th>
+          <th>Task</th>
+          <th>Status</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="dashboardBody"></tbody>
+    </table>
+  </div>
+
   <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbystZtnEdtTe6clteOkJfQ08M8L2Nc2ChSbrJ6NpNi_AsqeylD5ZyAuxHxO0_dZSgpT/exec';
     const form = document.getElementById('taskForm');
@@ -130,6 +145,32 @@
         form.reset();
       }).catch(err => alert('❌ Submission failed. Please try again.'));
     });
+  </script>
+
+  <script>
+    const dashboardURL = 'https://docs.google.com/spreadsheets/d/1tjKHaVAS57mxX7lKu8C6zj6rj4RaaqIRQZ3qa2qSgug/gviz/tq?tqx=out:json';
+
+    fetch(dashboardURL)
+      .then(res => res.text())
+      .then(data => {
+        const json = JSON.parse(data.substr(47).slice(0, -2));
+        const rows = json.table.rows;
+        const tbody = document.getElementById('dashboardBody');
+        rows.forEach(row => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${row.c[0]?.v || ''}</td>
+            <td>${row.c[1]?.v || ''}</td>
+            <td>${row.c[2]?.v || ''}</td>
+            <td>${row.c[3]?.v || ''}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(err => {
+        const tbody = document.getElementById('dashboardBody');
+        tbody.innerHTML = `<tr><td colspan="4">❌ Failed to load dashboard.</td></tr>`;
+      });
   </script>
 </body>
 </html>
