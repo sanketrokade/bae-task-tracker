@@ -8,7 +8,7 @@
   <style>
     body {
       font-family: 'Roboto', sans-serif;
-      background-color: #fff8dc; /* Light yellow background */
+      background-color: #fff8dc;
       margin: 0;
       padding: 0;
       display: flex;
@@ -104,10 +104,10 @@
     <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse; background: #fffef0;">
       <thead style="background: #ffc107; color: #2b2b2b;">
         <tr>
+          <th>Timestamp</th>
           <th>Name</th>
           <th>Task</th>
           <th>Status</th>
-          <th>Date</th>
         </tr>
       </thead>
       <tbody id="dashboardBody"></tbody>
@@ -122,7 +122,7 @@
       e.preventDefault();
 
       const accessCode = form.code.value.trim();
-      const secret = "bae@123"; // Change this to your actual team code
+      const secret = "bae@123";
 
       if (accessCode !== secret) {
         alert("❌ Incorrect Access Code. Please contact Sanket.");
