@@ -84,6 +84,10 @@
       <textarea id="task" name="task" rows="4" required></textarea>
 
       <label for="status">Status</label>
+      <!-- Add this below Status -->
+      <label for="code">Access Code</label>
+      <input type="password" id="code" name="code" required>
+
       <select id="status" name="status" required>
         <option value="Completed">Completed</option>
         <option value="In Progress">In Progress</option>
@@ -98,25 +102,34 @@
   <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbystZtnEdtTe6clteOkJfQ08M8L2Nc2ChSbrJ6NpNi_AsqeylD5ZyAuxHxO0_dZSgpT/exec';
     const form = document.getElementById('taskForm');
-
     form.addEventListener('submit', e => {
-      e.preventDefault();
-      const payload = {
-        name: form.name.value,
-        task: form.task.value,
-        status: form.status.value
-      };
+  e.preventDefault();
 
-      fetch(scriptURL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      }).then(() => {
-        alert('✅ Task submitted successfully!');
-        form.reset();
-      }).catch(err => alert('❌ Submission failed. Please try again.'));
-    });
+  const accessCode = form.code.value.trim();
+  const secret = "bae@123"; // You can change this anytime
+
+  if (accessCode !== secret) {
+    alert("❌ Incorrect Access Code. Please contact Sanket.");
+    return;
+  }
+
+  const payload = {
+    name: form.name.value,
+    task: form.task.value,
+    status: form.status.value
+  };
+
+  fetch(scriptURL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    alert('✅ Task submitted successfully!');
+    form.reset();
+  }).catch(err => alert('❌ Submission failed. Try again.'));
+});
+    
   </script>
 </body>
 </html>
