@@ -130,10 +130,11 @@
       }
 
       const payload = {
-        name: form.name.value,
-        task: form.task.value,
-        status: form.status.value
-      };
+  name: form.name.value.trim(),
+  task: form.task.value.replace(/[\r\n]+/g, " ").trim(),
+  status: form.status.value.trim()
+};
+
 
       fetch(scriptURL, {
         method: 'POST',
